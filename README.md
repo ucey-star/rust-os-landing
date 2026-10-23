@@ -1,13 +1,15 @@
 # rust-os-landing
 
-Proof-of-demand landing page for **The Rust OS Project**: an idea for a new operating system built in Rust. The page has one job: measure genuine interest by collecting email sign-ups.
+Proof-of-demand landing page for **Learn by Building** (working name): an idea for an AI-powered apprenticeship that teaches programming through building real software you choose, like an operating system in Rust. The AI doesn't write the code for you. It teaches concepts when you need them, makes you write and debug the code, and steps back as you improve. The page has one job: measure genuine interest by collecting email sign-ups.
+
+The working name lives in `src/lib/site.ts` (`siteName`). Change it there and the logo, metadata and share text all update.
 
 - Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Lucide icons
 - Sign-ups go to **[Formspree](https://formspree.io)**. There's no database and no backend to maintain.
 - Optional **Google Analytics 4** for privacy-conscious conversion tracking
 - Deploys to **Vercel** with zero configuration
 
-> This repository is only the landing page. It is intentionally separate from any OS code.
+> This repository is only the landing page. It is intentionally separate from any product code.
 
 ---
 
@@ -81,8 +83,9 @@ Each submission includes these fields:
 | --- | --- |
 | `email` | required |
 | `first_name` | optional |
-| `interests` | optional survey answers, e.g. `Security and privacy; Open-source collaboration` |
-| `feedback` | optional free text |
+| `languages` | optional survey: languages they want to learn, e.g. `Rust; Python` |
+| `experience` | optional survey: `New to coding`, `Some experience` or `Professional developer` |
+| `build_idea` | optional free text: what they'd want to build |
 | `form_location` | `hero` or `final`, the form that was used |
 | `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term` | from the landing URL, if present |
 | `referrer` | external referring site (origin and path only), or `(direct)` |
@@ -102,7 +105,7 @@ Unsubscribe requests from `/privacy#unsubscribe` arrive in the **same form** wit
 1. At <https://analytics.google.com>, create a property, then a **Web** data stream for your Vercel domain.
 2. Copy the **Measurement ID** (`G-…`) into `NEXT_PUBLIC_GA_MEASUREMENT_ID` on Vercel and redeploy.
 3. In GA4, go to Admin → Events and mark **`sign_up`** as a **key event** (conversion).
-4. Optional: under Admin → Custom definitions, register the event parameters `form_location`, `cta_id`, `interest`, `trigger`, and `reason` as custom dimensions so you can break reports down by them.
+4. Optional: under Admin → Custom definitions, register the event parameters `form_location`, `cta_id`, `language`, `experience`, `trigger`, and `reason` as custom dimensions so you can break reports down by them.
 
 Events sent by the site:
 
@@ -116,7 +119,7 @@ Events sent by the site:
 | `form_submit` | a submission attempt |
 | `form_error` | validation or submission failure (`reason`). **Never** counted as a sign-up. |
 | `sign_up` | **only after Formspree confirms success**. This is the conversion. |
-| `survey_response` / `survey_interest` | survey answers sent with a successful sign-up (categories only, never free text) |
+| `survey_response` / `survey_language` | survey answers sent with a successful sign-up (languages and experience level only, never free text) |
 | `share` | the Share button (`method`: `web_share` or `copy_link`) |
 | `faq_open` | an FAQ question is opened |
 
@@ -135,7 +138,7 @@ Conversion rate = unique successful sign-ups ÷ unique visitors × 100
 
 ### 10. View and export sign-ups
 
-In the Formspree dashboard, open your form → **Submissions** to browse them, then use **Export** to download a CSV. You can open it in Sheets or Excel and filter by `interests` or `utm_source`.
+In the Formspree dashboard, open your form → **Submissions** to browse them, then use **Export** to download a CSV. You can open it in Sheets or Excel and filter by `languages`, `experience` or `utm_source`.
 
 ---
 
@@ -144,7 +147,7 @@ In the Formspree dashboard, open your form → **Submissions** to browse them, t
 ```
 src/
   app/
-    page.tsx              landing page (hero, why Rust, help shape, roadmap, FAQ, final CTA)
+    page.tsx              landing page (hero, problem, how it would work, help shape, roadmap, FAQ, final CTA)
     privacy/page.tsx      privacy policy + unsubscribe form
     layout.tsx            fonts, SEO/Open Graph metadata, analytics
     opengraph-image.tsx   generated 1200×630 share image
@@ -158,7 +161,7 @@ src/
     formspree.ts          submit + "confirmed only" success logic, session de-dupe
     attribution.ts        UTM + referrer capture
     analytics.ts          GA4 track() with PII guard
-public/media/             promo video (MP4 + WebM), poster, background still
+public/media/             promo video (MP4 + WebM), poster, closing-section background still
 ```
 
 ## Editing content

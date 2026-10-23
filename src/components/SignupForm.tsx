@@ -16,16 +16,30 @@ import {
 import { SetupNotice } from "./SetupNotice";
 import { SignupSuccess } from "./SignupSuccess";
 
-export const INTERESTS = [
-  { value: "security_privacy", label: "Security and privacy" },
-  { value: "speed_performance", label: "Speed and performance" },
-  { value: "developer_customization", label: "Developer customization" },
-  { value: "learning_os_dev", label: "Learning about operating-system development" },
-  { value: "open_source", label: "Open-source collaboration" },
+export const LANGUAGES = [
+  { value: "rust", label: "Rust" },
+  { value: "python", label: "Python" },
+  { value: "javascript_typescript", label: "JavaScript / TypeScript" },
+  { value: "go", label: "Go" },
+  { value: "c_cpp", label: "C / C++" },
   { value: "something_else", label: "Something else" },
 ] as const;
 
+export const EXPERIENCE_LEVELS = [
+  { value: "new", label: "New to coding" },
+  { value: "some", label: "Some experience" },
+  { value: "professional", label: "Professional developer" },
+] as const;
+
 type Status = "idle" | "submitting" | "success" | "error";
+
+function chipClass(selected: boolean) {
+  return `cursor-pointer rounded-full border px-3 py-1.5 text-[13px] transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-cyber ${
+    selected
+      ? "border-volt/70 bg-volt/10 text-volt"
+      : "border-white/12 text-mute hover:border-white/30 hover:text-ink"
+  }`;
+}
 
 type SignupFormProps = {
   /** Where on the page this form lives; sent to Formspree and analytics. */
@@ -47,8 +61,9 @@ export function SignupForm({ location, emailInputId }: SignupFormProps) {
 
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [interests, setInterests] = useState<string[]>([]);
-  const [feedback, setFeedback] = useState("");
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [experience, setExperience] = useState("");
+  const [buildIdea, setBuildIdea] = useState("");
   const [surveyOpen, setSurveyOpen] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [formError, setFormError] = useState<string | null>(null);
@@ -93,8 +108,8 @@ export function SignupForm({ location, emailInputId }: SignupFormProps) {
     if (next) track("survey_open", { form_location: location });
   }
 
-  function toggleInterest(value: string) {
-    setInterests((current) =>
+  function toggleLanguage(value: string) {
+    setLanguages((current) =>
       current.includes(value) ? current.filter((v) => v !== value) : [...current, value],
     );
   }
@@ -136,22 +151,24 @@ export function SignupForm({ location, emailInputId }: SignupFormProps) {
     setStatus("submitting");
     setFormError(null);
 
-    const trimmedFeedback = feedback.trim();
-    const answeredSurvey = interests.length > 0 || trimmedFeedback.length > 0;
+    const trimmedIdea = buildIdea.trim();
+    const answeredSurvey = languages.length > 0 || experience !== "" || trimmedIdea.length > 0;
     track("form_submit", { form_location: location, survey_answered: answeredSurvey });
 
-    const selectedLabels = INTERESTS.filter((i) => interests.includes(i.value)).map(
-      (i) => i.label,
+    const languageLabels = LANGUAGES.filter((l) => languages.includes(l.value)).map(
+      (l) => l.label,
     );
+    const experienceLabel = EXPERIENCE_LEVELS.find((e) => e.value === experience)?.label ?? "";
 
     const result = await submitToFormspree({
       email: trimmedEmail,
       first_name: firstName.trim(),
-      interests: selectedLabels.join("; "),
-      feedback: trimmedFeedback,
+      languages: languageLabels.join("; "),
+      experience: experienceLabel,
+      build_idea: trimmedIdea,
       form_location: location,
       ...getAttribution(),
-      _subject: "New Rust OS interest sign-up",
+      _subject: "New interest-list sign-up",
       _gotcha: honeypotRef.current?.value ?? "",
     });
 
@@ -174,11 +191,12 @@ export function SignupForm({ location, emailInputId }: SignupFormProps) {
     if (answeredSurvey) {
       track("survey_response", {
         form_location: location,
-        interests: interests.join(","),
-        interest_count: interests.length,
-        has_feedback: trimmedFeedback.length > 0,
+        languages: languages.join(","),
+        language_count: languages.length,
+        experience: experience || undefined,
+        has_build_idea: trimmedIdea.length > 0,
       });
-      for (const interest of interests) track("survey_interest", { interest });
+      for (const language of languages) track("survey_language", { language });
     }
     movedFocus.current = true;
     markSignedUp();
@@ -272,7 +290,7 @@ export function SignupForm({ location, emailInputId }: SignupFormProps) {
           <span>
             <span className="font-mono text-[11px] tracking-wider text-cyber">OPTIONAL</span>
             <span className="mx-2 text-white/20">/</span>
-            What would make you try a Rust OS?
+            What would you want to learn?
           </span>
           <ChevronDown
             aria-hidden
@@ -280,51 +298,64 @@ export function SignupForm({ location, emailInputId }: SignupFormProps) {
           />
         </button>
 
-        <div id={ids.survey} hidden={!surveyOpen} className="px-4 pb-4">
+        <div id={ids.survey} hidden={!surveyOpen} className="space-y-5 px-4 pb-4">
           <fieldset>
             <legend className="mb-3 text-sm text-ink">
-              What would make you interested in trying a new OS built in Rust?
+              Which language would you want to learn?
               <span className="ml-1 text-mute">Select any.</span>
             </legend>
             <div className="flex flex-wrap gap-2">
-              {INTERESTS.map((interest) => {
-                const checked = interests.includes(interest.value);
+              {LANGUAGES.map((language) => {
+                const checked = languages.includes(language.value);
                 return (
-                  <label
-                    key={interest.value}
-                    className={`cursor-pointer rounded-full border px-3 py-1.5 text-[13px] transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-cyber ${
-                      checked
-                        ? "border-volt/70 bg-volt/10 text-volt"
-                        : "border-white/12 text-mute hover:border-white/30 hover:text-ink"
-                    }`}
-                  >
+                  <label key={language.value} className={chipClass(checked)}>
                     <input
                       type="checkbox"
-                      name="interests"
-                      value={interest.value}
+                      name="languages"
+                      value={language.value}
                       checked={checked}
-                      onChange={() => toggleInterest(interest.value)}
+                      onChange={() => toggleLanguage(language.value)}
                       className="sr-only"
                     />
-                    {interest.label}
+                    {language.label}
                   </label>
                 );
               })}
             </div>
           </fieldset>
-          <label htmlFor={ids.feedback} className="mt-4 mb-1.5 block text-xs font-medium text-mute">
-            Anything else? <span className="text-mute/60">(optional)</span>
-          </label>
-          <textarea
-            id={ids.feedback}
-            name="feedback"
-            rows={3}
-            maxLength={1000}
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            placeholder="What would make a Rust-based OS worth using for you?"
-            className="w-full resize-y rounded-xl border border-white/12 bg-void/70 px-4 py-3 text-base text-ink placeholder:text-mute/50 transition-colors hover:border-white/25 focus:border-cyber/70 focus:outline-none sm:text-sm"
-          />
+          <fieldset>
+            <legend className="mb-3 text-sm text-ink">Your coding experience</legend>
+            <div className="flex flex-wrap gap-2">
+              {EXPERIENCE_LEVELS.map((level) => (
+                <label key={level.value} className={chipClass(experience === level.value)}>
+                  <input
+                    type="radio"
+                    name={`${uid}-experience`}
+                    value={level.value}
+                    checked={experience === level.value}
+                    onChange={() => setExperience(level.value)}
+                    className="sr-only"
+                  />
+                  {level.label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div>
+            <label htmlFor={ids.feedback} className="mb-1.5 block text-sm text-ink">
+              What would you want to build?
+            </label>
+            <textarea
+              id={ids.feedback}
+              name="build_idea"
+              rows={2}
+              maxLength={1000}
+              value={buildIdea}
+              onChange={(e) => setBuildIdea(e.target.value)}
+              placeholder="An operating system, a game engine, a web app…"
+              className="w-full resize-y rounded-xl border border-white/12 bg-void/70 px-4 py-3 text-base text-ink placeholder:text-mute/50 transition-colors hover:border-white/25 focus:border-cyber/70 focus:outline-none sm:text-sm"
+            />
+          </div>
         </div>
       </div>
 

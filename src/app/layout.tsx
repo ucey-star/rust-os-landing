@@ -23,24 +23,24 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const shareTitle = "An Operating System Built in Rust. Would You Use It?";
+const shareTitle = "Learn to Code by Building Real Software. Would You Use It?";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} — An Operating System Built in Rust`,
+    default: `${siteName} — Learn to Code by Building Real Software`,
     template: `%s · ${siteName}`,
   },
   description: siteDescription,
   applicationName: siteName,
   keywords: [
-    "Rust",
-    "operating system",
-    "Rust OS",
-    "systems programming",
-    "kernel",
-    "open source",
-    "OS development",
+    "learn to code",
+    "learn programming",
+    "AI tutor",
+    "project-based learning",
+    "learn Rust",
+    "build an operating system",
+    "coding apprenticeship",
   ],
   alternates: { canonical: "/" },
   openGraph: {

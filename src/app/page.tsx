@@ -2,13 +2,17 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import {
   ArrowRight,
-  Cpu,
+  Bot,
+  Brain,
+  Code2,
   Eye,
-  Gauge,
   Info,
   MessagesSquare,
-  ShieldCheck,
+  MonitorPlay,
+  Route,
   Sparkles,
+  TrendingDown,
+  Waypoints,
   type LucideIcon,
 } from "lucide-react";
 import { CtaButton, HERO_EMAIL_INPUT_ID, SIGNUP_ANCHOR } from "@/components/CtaButton";
@@ -25,7 +29,8 @@ export default function HomePage() {
     <>
       <main>
         <Hero />
-        <WhyRust />
+        <Problem />
+        <HowItWorks />
         <HelpShape />
         <Roadmap />
         <FaqSection />
@@ -65,14 +70,14 @@ function Hero() {
         <div>
           <p className="rise flex items-center gap-3 font-mono text-[11px] tracking-[0.22em] text-cyber sm:text-xs">
             <span aria-hidden className="h-px w-8 bg-gradient-to-r from-transparent to-cyber" />
-            THE RUST OS PROJECT // EARLY CONCEPT
+            AI APPRENTICESHIP // EARLY CONCEPT
           </p>
 
           <h1
-            className="rise mt-5 font-display text-[2.45rem] leading-[1.03] font-semibold tracking-[-0.035em] text-ink sm:text-6xl lg:text-[3.7rem] text-balance"
+            className="rise mt-5 font-display text-[2.45rem] leading-[1.03] font-semibold tracking-[-0.035em] text-balance text-ink sm:text-6xl lg:text-[3.6rem]"
             style={delay(80)}
           >
-            An Operating System Built in Rust.
+            Learn to Code by Building Real Software.
             <span className="text-gradient mt-2 block pb-1">Would You Use It?</span>
           </h1>
 
@@ -80,17 +85,18 @@ function Hero() {
             className="rise mt-5 max-w-xl text-[17px] leading-relaxed text-mute sm:text-lg"
             style={delay(160)}
           >
-            I’m exploring the idea of building a new operating system in Rust. Join the
-            early-interest list, follow the journey, and help shape what this project could become.
+            We’re exploring an AI-powered apprenticeship that teaches programming through a project
+            you choose — like building an operating system in Rust. It won’t write the code for you.
+            It teaches what you need when you need it, and steps back as you get better.
           </p>
 
           <div
             id={SIGNUP_ANCHOR}
-            className="rise mt-6 max-w-xl scroll-mt-24 sm:mt-8 rounded-2xl border border-white/10 bg-panel/60 p-4 shadow-[0_30px_80px_-40px_rgb(0_0_0/0.9)] backdrop-blur-md sm:p-5"
+            className="rise mt-6 max-w-xl scroll-mt-24 rounded-2xl border border-white/10 bg-panel/60 p-4 shadow-[0_30px_80px_-40px_rgb(0_0_0/0.9)] backdrop-blur-md sm:mt-8 sm:p-5"
             style={delay(240)}
           >
             <p aria-hidden className="mb-4 font-mono text-[11px] tracking-wider text-mute">
-              <span className="text-volt">$</span> rust-os --join interest-list
+              <span className="text-volt">$</span> learn --by-building --join
               <span className="caret ml-0.5 inline-block h-3 w-1.5 translate-y-0.5 bg-volt/80" />
             </p>
             <SignupForm location="hero" emailInputId={HERO_EMAIL_INPUT_ID} />
@@ -101,7 +107,7 @@ function Hero() {
           <HeroVideo />
           <p className="mt-4 flex items-center gap-2 font-mono text-[11px] tracking-wide text-mute/80">
             <Info className="size-3.5 shrink-0" aria-hidden />
-            Concept teaser. Nothing shown is a working product — yet.
+            Concept teaser. Nothing shown is a working product — we’re testing whether it should be.
           </p>
         </div>
       </div>
@@ -125,7 +131,7 @@ function SectionHeading({
   return (
     <div className={`reveal max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
       <p className="font-mono text-[11px] tracking-[0.22em] text-cyber sm:text-xs">{eyebrow}</p>
-      <h2 className="mt-4 font-display text-3xl leading-tight font-semibold tracking-[-0.025em] text-ink sm:text-[2.6rem]">
+      <h2 className="mt-4 font-display text-3xl leading-tight font-semibold tracking-[-0.025em] text-balance text-ink sm:text-[2.6rem]">
         {title}
       </h2>
       {children && <div className="mt-4 text-[17px] leading-relaxed text-mute">{children}</div>}
@@ -133,7 +139,7 @@ function SectionHeading({
   );
 }
 
-const REASONS: {
+const PROBLEMS: {
   tag: string;
   title: string;
   body: string;
@@ -143,40 +149,44 @@ const REASONS: {
 }[] = [
   {
     tag: "01",
-    title: "Memory Safety",
-    body: "Rust’s ownership model and borrow checker rule out whole classes of memory bugs — use-after-free, double frees, data races — at compile time. That could make it a valuable foundation for a kernel, where those bugs have historically done the most damage.",
-    code: "unsafe { /* small, auditable */ }",
-    icon: ShieldCheck,
+    title: "Passive by Design",
+    body: "Hundreds of hours of video feel like progress. But recognising a solution on screen isn’t the same as producing one in a blank editor — and that’s the skill a real project demands.",
+    code: "// watched it. can you write it?",
+    icon: MonitorPlay,
     accent: "text-volt border-volt/30 bg-volt/10 group-hover:shadow-[0_0_30px_-6px_rgb(185_255_53/0.6)]",
   },
   {
     tag: "02",
-    title: "Performance",
-    body: "No garbage collector, no required runtime, and zero-cost abstractions that compile down to predictable machine code. Rust is a credible fit for low-level, performance-conscious systems software.",
-    code: "// no GC · no runtime",
-    icon: Gauge,
+    title: "How Memory Works",
+    body: "Psychologists call it the testing effect: you retain information by retrieving and using it, not by watching someone else use it. Knowledge you never have to use doesn’t stick.",
+    code: "see: Roediger & Karpicke, 2006",
+    icon: Brain,
     accent: "text-cyber border-cyber/30 bg-cyber/10 group-hover:shadow-[0_0_30px_-6px_rgb(23_221_242/0.6)]",
   },
   {
     tag: "03",
-    title: "Control",
-    body: "#![no_std], inline assembly, and raw pointers where they’re genuinely needed. Rust can reach down to registers, interrupts, and memory-mapped hardware while keeping its type system everywhere else.",
-    code: "#![no_std] #![no_main]",
-    icon: Cpu,
+    title: "Outsourced to AI",
+    body: "Asking an AI to write the code ships the feature but skips the learning. You end up with software you can’t explain, debug, or extend on your own.",
+    code: "> just generate it for me",
+    icon: Bot,
     accent: "text-neon border-neon/30 bg-neon/10 group-hover:shadow-[0_0_30px_-6px_rgb(152_91_255/0.6)]",
   },
 ];
 
-function WhyRust() {
+function Problem() {
   return (
-    <section aria-labelledby="why-rust" className="relative py-20 sm:py-28">
+    <section aria-labelledby="problem" className="relative py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeading eyebrow="// MOTIVATION" title={<span id="why-rust">Why Build an OS in Rust?</span>}>
-          The technical reasons this idea is worth exploring.
+        <SectionHeading
+          eyebrow="// THE PROBLEM"
+          title={<span id="problem">Finished a Course. Froze on Your First Real Project?</span>}
+        >
+          That’s not a you problem. Following along and building are two different skills — and
+          most courses only train the first.
         </SectionHeading>
 
         <div className="mt-12 grid gap-4 md:grid-cols-3 md:gap-5">
-          {REASONS.map(({ tag, title, body, code, icon: Icon, accent }) => (
+          {PROBLEMS.map(({ tag, title, body, code, icon: Icon, accent }) => (
             <article
               key={title}
               className="reveal group relative flex flex-col overflow-hidden rounded-2xl border border-white/8 bg-gradient-to-b from-panel to-panel/40 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 sm:p-7"
@@ -201,12 +211,82 @@ function WhyRust() {
             </article>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <p className="reveal mt-6 flex items-start gap-2 text-[13px] leading-relaxed text-mute/80">
-          <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
-          These are the motivations behind the idea — not specifications, benchmarks, or performance
-          guarantees for a product that doesn’t exist yet.
-        </p>
+/* ------------------------------------------------------------------ */
+
+const STEPS: { title: string; body: string; icon: LucideIcon }[] = [
+  {
+    title: "Pick a Real Project",
+    body: "Choose a language and something you actually want to build. Learning Rust? Build an operating system.",
+    icon: Waypoints,
+  },
+  {
+    title: "Learn Just in Time",
+    body: "The AI shapes a personal learning path around your project and teaches each concept the moment you need it.",
+    icon: Route,
+  },
+  {
+    title: "Write It Yourself",
+    body: "You write and debug the code. The AI validates your work and makes you take real engineering decisions.",
+    icon: Code2,
+  },
+  {
+    title: "Help That Fades",
+    body: "Heavy support at the start, hands-off by the end — so you leave with a skill, not a completed checklist.",
+    icon: TrendingDown,
+  },
+];
+
+function HowItWorks() {
+  return (
+    <section aria-labelledby="how" className="relative py-20 sm:py-28">
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[radial-gradient(45%_55%_at_85%_40%,rgb(23_221_242/0.08),transparent_70%)]"
+      />
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <SectionHeading eyebrow="// THE IDEA" title={<span id="how">How It Would Work</span>}>
+          An apprenticeship, not a course. This is the concept we’re testing — none of it exists yet.
+        </SectionHeading>
+
+        <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {STEPS.map(({ title, body, icon: Icon }, i) => (
+            <li
+              key={title}
+              className="reveal group relative rounded-2xl border border-white/8 bg-panel/50 p-6 transition-colors hover:border-white/20"
+            >
+              <div className="flex items-center justify-between">
+                <span className="flex size-10 items-center justify-center rounded-lg border border-white/10 bg-void text-cyber transition-colors group-hover:border-cyber/40">
+                  <Icon className="size-5" aria-hidden />
+                </span>
+                <span className="font-mono text-xs text-mute/60">0{i + 1}</span>
+              </div>
+              <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-ink">{title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-mute">{body}</p>
+            </li>
+          ))}
+        </ol>
+
+        {/* Support fading from full to none */}
+        <div aria-hidden className="reveal mt-6 px-1">
+          <div className="h-1.5 rounded-full bg-gradient-to-r from-volt via-cyber/50 to-transparent" />
+          <div className="mt-2 flex justify-between font-mono text-[10px] tracking-[0.18em] text-mute/70 sm:text-[11px]">
+            <span>AI SUPPORT: HIGH</span>
+            <span>YOU, ON YOUR OWN</span>
+          </div>
+        </div>
+
+        <figure className="reveal mt-16 rounded-2xl border border-volt/20 bg-gradient-to-br from-volt/[0.06] via-transparent to-neon/[0.06] px-6 py-10 text-center sm:px-12 sm:py-14">
+          <p className="font-mono text-[11px] tracking-[0.22em] text-volt">{"// THE PRINCIPLE"}</p>
+          <blockquote className="mx-auto mt-5 max-w-3xl font-display text-2xl leading-snug font-medium tracking-tight text-balance text-ink sm:text-[2rem]">
+            The measure of success isn’t “Did you finish the project?”
+            <span className="text-gradient mt-1 block">It’s “Could you build the next one without us?”</span>
+          </blockquote>
+        </figure>
       </div>
     </section>
   );
@@ -222,7 +302,7 @@ const BENEFITS: { title: string; body: string; icon: LucideIcon }[] = [
   },
   {
     title: "Share Your Ideas",
-    body: "Tell us what would make a Rust-based operating system worth using.",
+    body: "Tell us what you’d want to learn and what you’d want to build.",
     icon: MessagesSquare,
   },
   {
@@ -288,21 +368,21 @@ const STAGES = [
   {
     n: "01",
     title: "Validate Demand",
-    body: "Determine whether there is genuine interest in a new Rust-based operating system.",
+    body: "Find out whether people genuinely want to learn to code this way.",
     status: "Happening now",
     current: true,
   },
   {
     n: "02",
     title: "Explore the Vision",
-    body: "Gather community feedback and investigate the technical requirements.",
+    body: "Gather feedback on the languages, projects, and support people want, and investigate what it would take to build.",
     status: "If there’s interest",
     current: false,
   },
   {
     n: "03",
     title: "Evaluate a Prototype",
-    body: "If sufficient demand and technical feasibility exist, explore developing an early prototype.",
+    body: "If sufficient demand and feasibility exist, explore developing an early prototype.",
     status: "If it’s feasible",
     current: false,
   },
@@ -378,7 +458,7 @@ function FinalCta() {
     <section aria-labelledby="final-cta" className="bg-noise relative isolate overflow-hidden py-24 sm:py-32">
       <div aria-hidden className="absolute inset-0 -z-10">
         <Image
-          src="/media/access-limited.webp"
+          src="/media/hologram.webp"
           alt=""
           fill
           sizes="100vw"
@@ -396,12 +476,12 @@ function FinalCta() {
         </p>
         <h2
           id="final-cta"
-          className="reveal mt-5 font-display text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-ink sm:text-6xl"
+          className="reveal mt-5 font-display text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-ink sm:text-6xl"
         >
-          Would You Use an OS <span className="text-gradient">Built in Rust?</span>
+          Would You Learn to Code <span className="text-gradient">This Way?</span>
         </h2>
         <p className="reveal mx-auto mt-5 max-w-lg text-lg leading-relaxed text-mute">
-          Help us discover whether this idea should become a real project.
+          Help us find out whether this idea should become a real product.
         </p>
 
         <div className="reveal mx-auto mt-10 max-w-xl rounded-2xl border border-white/10 bg-void/70 p-4 text-left shadow-[0_0_80px_-20px_rgb(185_255_53/0.25)] backdrop-blur-md sm:p-5">

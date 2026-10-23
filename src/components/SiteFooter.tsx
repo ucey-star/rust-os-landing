@@ -8,8 +8,8 @@ export function SiteFooter() {
         <div className="space-y-2">
           <Logo />
           <p className="max-w-md text-xs leading-relaxed text-mute">
-            An early concept being validated — not a released product. An independent project, not
-            affiliated with or endorsed by the Rust Project or the Rust Foundation.
+            An early concept being validated — not a released product. Rust is a trademark of the
+            Rust Foundation; this project is not affiliated with or endorsed by it.
           </p>
         </div>
         <nav aria-label="Footer" className="flex gap-6 font-mono text-xs tracking-wider text-mute">

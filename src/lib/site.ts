@@ -1,7 +1,8 @@
-export const siteName = "The Rust OS Project";
+// Working name — change it here and it updates across the site.
+export const siteName = "Learn by Building";
 
 export const siteDescription =
-  "An early concept for a new operating system built in Rust. Join the interest list, follow the journey, and help decide whether it should be built.";
+  "An early concept for an AI-powered apprenticeship that teaches programming through building real software you choose — like an operating system in Rust. Join the interest list and help decide whether it should exist.";
 
 // NEXT_PUBLIC_SITE_URL wins; on Vercel we fall back to the production domain.
 export const siteUrl =

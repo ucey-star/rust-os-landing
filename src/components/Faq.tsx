@@ -6,20 +6,28 @@ import { track } from "@/lib/analytics";
 
 const FAQS = [
   {
-    q: "Is the OS available now?",
-    a: "No. This is an early-stage concept currently being validated.",
+    q: "Is this available now?",
+    a: "No. This is an early-stage concept. We’re testing whether people genuinely want it before building it.",
   },
   {
-    q: "Why Rust?",
-    a: "Rust provides interesting opportunities for systems programming, including memory safety and low-level control.",
+    q: "How is this different from a coding course?",
+    a: "No videos and no passive lessons. You’d learn by building a real project you choose, with each concept introduced at the moment your project needs it.",
+  },
+  {
+    q: "Will the AI write the code for me?",
+    a: "No — that’s the point. It would explain, review, and push you to make engineering decisions, but you’d write and debug the code yourself. Its help would fade as you get more capable.",
+  },
+  {
+    q: "Why does the video talk about building an OS in Rust?",
+    a: "It’s one example of the kind of ambitious project you could learn through. The idea is that you pick the language and the project.",
+  },
+  {
+    q: "Which languages would it support?",
+    a: "That hasn’t been decided. The answers people give when they sign up will help decide where it starts.",
   },
   {
     q: "When will it launch?",
     a: "There is no confirmed launch date. Development depends on demand, feasibility, and available resources.",
-  },
-  {
-    q: "Who is this for?",
-    a: "Developers, Rust enthusiasts, systems programmers, and people interested in alternative operating systems.",
   },
   {
     q: "What happens when I sign up?",

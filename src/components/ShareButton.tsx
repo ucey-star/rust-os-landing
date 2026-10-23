@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { Check, Share2 } from "lucide-react";
 import { track } from "@/lib/analytics";
+import { siteName } from "@/lib/site";
 
-const SHARE_TEXT = "Someone wants to build an operating system in Rust. Would you use it?";
+const SHARE_TEXT =
+  "An AI apprenticeship that teaches you to code by making you build real software — like an OS in Rust. Would you use it?";
 
 function shareUrl() {
   const url = new URL(window.location.origin);
@@ -36,7 +38,7 @@ export function ShareButton() {
 
   async function handleShare() {
     const url = shareUrl();
-    const data = { title: "The Rust OS Project", text: SHARE_TEXT, url };
+    const data = { title: siteName, text: SHARE_TEXT, url };
 
     if (navigator.share && (!navigator.canShare || navigator.canShare(data))) {
       try {

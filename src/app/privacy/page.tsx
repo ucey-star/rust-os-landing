@@ -8,7 +8,7 @@ import { contactEmail } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "How the Rust OS Project handles the email addresses and feedback it collects.",
+  description: "How we handle the email addresses and feedback we collect.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
           <section>
             <h2>Why we collect your email</h2>
             <p>
-              The Rust OS Project is an early-stage idea. Emails are collected for two reasons only:
+              This project is an early-stage idea. Emails are collected for two reasons only:
               to measure whether there’s genuine interest in building it, and to send you relevant
               project updates. We don’t sell, rent, or share your email with anyone for marketing.
             </p>

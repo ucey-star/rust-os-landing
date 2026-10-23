@@ -33,7 +33,7 @@ export function UnsubscribeForm() {
     const result = await submitToFormspree({
       email: trimmed,
       request_type: "unsubscribe",
-      _subject: "Unsubscribe request — Rust OS interest list",
+      _subject: "Unsubscribe request — interest list",
     });
     inFlight.current = false;
 

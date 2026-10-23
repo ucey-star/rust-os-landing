@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "An Operating System Built in Rust. Would You Use It?";
+export const alt = "Learn to Code by Building Real Software. Would You Use It?";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -46,7 +46,7 @@ export default async function OpengraphImage() {
           }}
         >
           <div style={{ fontSize: 22, letterSpacing: 5, color: "#17DDF2", fontFamily: "monospace" }}>
-            THE RUST OS PROJECT // EARLY CONCEPT
+            AI APPRENTICESHIP // EARLY CONCEPT
           </div>
           <div
             style={{
@@ -58,13 +58,13 @@ export default async function OpengraphImage() {
               letterSpacing: -2,
             }}
           >
-            An Operating System Built in Rust.
+            Learn to Code by Building Real Software.
           </div>
           <div style={{ marginTop: 14, fontSize: 70, fontWeight: 700, color: "#B9FF35", letterSpacing: -2 }}>
             Would You Use It?
           </div>
           <div style={{ marginTop: 34, fontSize: 26, color: "#A1A7B3" }}>
-            Join the early-interest list.
+            Learn Rust by building an OS. What would you build?
           </div>
         </div>
       </div>

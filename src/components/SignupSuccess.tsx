@@ -60,7 +60,7 @@ export const SignupSuccess = forwardRef<HTMLHeadingElement>(function SignupSucce
         You’re on the list.
       </h3>
       <p className="relative mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-mute">
-        Thanks for being interested in the Rust OS project. Your interest helps us understand
+        Thanks for being interested in learning by building. Your interest helps us understand
         whether this idea is worth pursuing.
       </p>
       <div className="relative mt-6">
